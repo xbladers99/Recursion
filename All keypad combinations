@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void keycomb(string str,vector<string> &v,int arr[],int i,int n)
+{
+    static int c = 0;
+    if(i == n)
+    {
+        c++;
+        cout<<c<<": "<<str<<endl;
+        return;
+    }
+    
+    string s = v[arr[i]];
+    
+    for(int j=0;j<s.length();j++)
+        keycomb(str + s[j],v,arr,i+1,n);
+}
+
+int main()
+{
+    int arr[] = {2,3,4};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+    vector<string> v(10);
+    v[0] = "\0";
+    v[1] = "\0";
+    v[2] = "ABC";   v[3] = "DEF";
+    v[4] = "GHI";   v[5] = "JKL";
+    v[6] = "MNO";   v[7] = "PQRS";
+    v[8] = "TUV";   v[9] = "WXYZ";
+    
+    keycomb("",v,arr,0,n);
+}
