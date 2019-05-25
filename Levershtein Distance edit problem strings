@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+//using recursion .. O(3^n)
+int dist(string str1,string str2,int i,int j)
+{
+    //base case : either of str1 or str2 are empty
+    if(j==0)
+        return i;
+    if(i==0)
+        return j;
+        
+    int cost = 0; 
+    //case 2: last characters same
+    if(str1[i-1] == str2[j-1])
+        //return dist(str1,str2,i-1,j-1);
+        cost = 0;
+    else 
+        cost = 1;
+    
+    //case 3: last characters different
+    return min(min(dist(str1,str2,i-1,j) + 1, dist(str1,str2,i,j-1)+1), dist(str1,str2,i-1,j-1)+cost);
+}
+//using dynamic programming .. O(n^2)
+int dist(string str1,string str2,int m,int n)
+{
+    int mat[m+1][n+1] = {0};
+    int i,j;
+    //base case : either of str1 or str2 are empty
+    for(i=1;i<=m;i++)
+        mat[i][0] = i;
+    for(j=1;j<=n;j++)
+        mat[0][j] = j;
+    
+    // if(j==0)
+    //     return i;
+    // if(i==0)
+    //     return j;
+        
+    //case 2: last characters same
+    // if(str1[i] == str2[j])
+    //     return dist(str1,str2,i-1,j-1);
+    int cost;
+    for(i=1;i<=m;i++)
+    {
+        for(j=1;j<=n;j++)
+        {
+            if(str1[i]==str2[j])
+                //mat[i][j] = mat[i-1][j-1];
+                cost = 0;
+            else cost = 1;
+        
+            mat[i][j] = min(min(mat[i-1][j] + 1, mat[i][j-1] + 1), mat[i-1][j-1] + cost);
+        }
+    }
+    
+    return mat[m][n];
+    //case 3: last characters different
+    //return 1 + min(min(dist(str1,str2,i-1,j) + 1, dist(str1,str2,i,j-1)+1), dist(str1,str2,i-1,j-1));
+}
+
+int main() {
+
+    string X = "chicken", Y = "dicken";
+	cout<<dist(X,Y,X.length(),Y.length());
+}
