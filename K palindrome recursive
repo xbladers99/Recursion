@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int diff(string str,int i,int j)
+{
+    if(i >= j)
+        return 0;
+    if(str[i] == str[j])
+        return diff(str,i+1,j-1);
+    else
+        return 1 + min(diff(str,i+1,j),diff(str,i,j-1));
+}
+
+int main()
+{
+    string str = "PRATIK";
+    int k = 1;
+    // if(diff(str,0,str.length()-1) <= k)
+    //     cout<<"String is k palindrome\n";
+    // else
+    //     cout<<"String is not k palindrome\n";
+    cout<<diff(str,0,str.length()-1);
+}
