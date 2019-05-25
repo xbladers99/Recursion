@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+int diff(string str,int k)
+{
+	string rev = str;
+	reverse(rev.begin(),rev.end());
+	int n = str.length();
+	int mat[n+1][n+1];
+	int i,j;
+	for(i=0;i<=n;i++)
+	{
+		mat[i][0] = mat[0][i] = i;
+	}
+	
+	for(i=1;i<=n;i++)
+	{
+		for(j=1;j<=n;j++)
+		{
+			if(str[i-1] == rev[j-1])
+			{
+				mat[i][j] = mat[i-1][j-1];
+			}
+			else
+			{
+				mat[i][j] = 1 + min(mat[i-1][j],mat[i][j-1]);
+			}
+		}
+	}
+	return mat[n][n];
+}
+
+int main() {
+	string str = "ABCDBA";
+	int k = 1;
+	cout<<diff(str,k);
+	return 0;
+}
