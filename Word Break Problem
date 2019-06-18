@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+void find(string str, int n, unordered_set<string> dict, string result)
+{
+    for(int i=1;i<=n;i++)
+    {
+        string prefix = str.substr(0,i);
+        if(dict.find(prefix)!=dict.end())
+        {
+            if(i==n)
+            {
+                result += prefix;
+                cout<<"(" + result + ")";
+                return;
+            }
+            find(str.substr(i,n-i),n-i,dict,result + prefix + " ");
+        }
+    }
+}
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n;
+        cin>>n;
+        unordered_set<string> dict;
+        unordered_set<char> firstletter;
+        
+        int i;
+        for(i=0;i<n;i++)
+        {
+            string str;
+            cin>>str;
+            dict.insert(str);
+            firstletter.insert(str[0]);
+        }
+        
+        vector<string> ans;
+        string str;
+        cin>>str;
+        if(firstletter.find(str[0])==firstletter.end())
+        {
+            cout<<"Empty\n";
+            continue;
+        }
+        find(str,str.length(),dict,"");
+        cout<<endl;
+    }
+	return 0;
+}
